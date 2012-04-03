@@ -7,10 +7,14 @@ import org.docx4j.model.properties.table.tc.AbstractTcProperty;
 import org.docx4j.openpackaging.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;  
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+import org.docx4j.openpackaging.parts.WordprocessingML.HeaderPart;
+import org.docx4j.relationships.Relationship;
 import org.docx4j.wml.Body;
 import org.docx4j.wml.BooleanDefaultTrue;
 import org.docx4j.wml.CTBorder;
 import org.docx4j.wml.CTShd;
+import org.docx4j.wml.HeaderReference;
+import org.docx4j.wml.SectPr;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
 
@@ -56,6 +60,7 @@ public class makereport {
         initalize();
         
         //program core
+        header_factory_create();
         factory_create();
         title();
         factory_create();
@@ -75,6 +80,8 @@ public class makereport {
     protected static void initalize() throws InvalidFormatException{
         //create word file
         wordMLPackage=WordprocessingMLPackage.createPackage();  
+        //MainDocumentPart mainDocumentPart = wordMLPackage.getMainDocumentPart();
+        //createHeaderPart(wordMLPackage);
         
         //open old data
         //WordprocessingMLPackage wordMLPackage=WordprocessingMLPackage.load(new java.io.File(inputfilepath));
@@ -274,6 +281,64 @@ public class makereport {
     	tbl.getContent().add(tr[1]);
     	wordMLPackage.getMainDocumentPart().addObject(tbl);
     }
+    
+    
+    protected static void header_factory_create() throws InvalidFormatException{
+        SectPr sectPr = factory.createSectPr();
+        HeaderReference headerReference = factory.createHeaderReference();
+        
+        HeaderPart headerPart=new HeaderPart();
+        Relationship relationship=wordMLPackage.getMainDocumentPart().addTargetPart(headerPart);
+        //headerReference.setId(relationship.getId());
+        //headerReference.setType(HdrFtrRef.DEFAULT);
+        sectPr.getEGHdrFtrReferences().add(headerReference);// add header or
+       
+        wordMLPackage.getMainDocumentPart().addObject(sectPr);
+    }
+    
+/*
+        private static ObjectFactory objectFactory = new ObjectFactory();
+
+
+        public static void createHeaderPart(
+              WordprocessingMLPackage wordprocessingMLPackage)
+              throws InvalidFormatException {
+           HeaderPart headerPart = new HeaderPart();
+            headerPart.setJaxbElement(getHdr());
+           Relationship relationship = wordprocessingMLPackage.getMainDocumentPart()
+                 .addTargetPart(headerPart);
+
+           SectPr sectPr = objectFactory.createSectPr();
+
+           HeaderReference headerReference = objectFactory.createHeaderReference();
+           headerReference.setId(relationship.getId());
+           headerReference.setType(HdrFtrRef.DEFAULT);
+           sectPr.getEGHdrFtrReferences().add(headerReference);// add header or
+          
+           wordprocessingMLPackage.getMainDocumentPart().addObject(sectPr);
+
+
+        }
+
+        public static Hdr getHdr() {
+
+           Hdr hdr = objectFactory.createHdr();
+
+           hdr.getEGBlockLevelElts().add(getP());
+           return hdr;
+
+        }
+
+        public static P getP() {
+           P headerP = objectFactory.createP();
+           R run1 = objectFactory.createR();
+           Text text = objectFactory.createText();
+           text.setValue("123head123");
+           run1.getRunContent().add(text);
+           headerP.getParagraphContent().add(run1);
+           return headerP;
+        }*/
+        
 }  
 
 

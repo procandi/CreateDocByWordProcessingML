@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.docx4j.dml.ObjectFactory"/>
+<fullyQualifiedTypeName name="org.docx4j.openpackaging.parts.WordprocessingML.HeaderPart"/>
+<fullyQualifiedTypeName name="org.docx4j.wml.SectPr"/>
+<fullyQualifiedTypeName name="org.docx4j.wml.HeaderReference"/>
+<fullyQualifiedTypeName name="org.docx4j.relationships.Relationship"/>
+</qualifiedTypeNameHistroy>
