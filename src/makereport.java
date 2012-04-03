@@ -15,7 +15,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.css.CSSValue;
 
 public class makereport {
-	final static int c_tr=2;
+	final static int c_tr=12;
 	final static int c_tc=6;
 	final static int c_p=6;
 	final static int c_r=6;
@@ -52,18 +52,19 @@ public class makereport {
     public static void main(String[] args) throws Exception {  
         System.out.println("begin..");  
         
+        //create word file and object
         initalize();
+        
+        //program core
         factory_create();
-        
-        
         title();
-        
-        /*        
-    	shd.setFill(UnitsOfMeasurement.rgbTripleToHex(55, 55, 55));
-        tcpr.setShd(shd);
-        tc.setTcPr(tcpr);
-		*/
-        
+        factory_create();
+        unsolved();
+        factory_create();
+        profile();
+        factory_create();
+        content();
+           
         //save word file  
         wordMLPackage.save(new java.io.File(System.getProperty("user.dir") + "/aaa.docx") );  
     
@@ -74,6 +75,8 @@ public class makereport {
     protected static void initalize() throws InvalidFormatException{
         //create word file
         wordMLPackage=WordprocessingMLPackage.createPackage();  
+        
+        //open old data
         //WordprocessingMLPackage wordMLPackage=WordprocessingMLPackage.load(new java.io.File(inputfilepath));
         //MainDocumentPart documentPart=wordMLPackage.getMainDocumentPart();
         //org.docx4j.wml.Document wmlDocumentEl=(org.docx4j.wml.Document)documentPart.getJaxbElement();
@@ -124,6 +127,7 @@ public class makereport {
     
     
     protected static void title(){
+    	//row 1, col 1
     	hpsmeasure[0].setVal(new java.math.BigInteger("20"));
         rpr[1].setSz(hpsmeasure[0]);
     	color[0].setVal("00FF00");
@@ -135,8 +139,8 @@ public class makereport {
     	p[0].getContent().add(r[0]);
     	tc[0].getContent().add(p[0]);
     	tr[0].getContent().add(tc[0]);
-    	//------------------------------------------
     	
+    	//row 1, col 2
     	hpsmeasure[1].setVal(new java.math.BigInteger("30"));
         rpr[1].setSz(hpsmeasure[1]);
     	rpr[1].setB(bdt);
@@ -147,8 +151,8 @@ public class makereport {
     	p[1].getContent().add(r[1]);
     	tc[1].getContent().add(p[1]);
     	tr[0].getContent().add(tc[1]);
-    	//------------------------------------------
     	
+    	//row 1, col 3
     	hpsmeasure[2].setVal(new java.math.BigInteger("40"));
         rpr[2].setSz(hpsmeasure[2]);
     	rpr[2].setB(bdt);
@@ -159,15 +163,15 @@ public class makereport {
     	p[2].getContent().add(r[2]);
     	tc[2].getContent().add(p[2]);
     	tr[0].getContent().add(tc[2]);
-    	//------------------------------------------
-
+    	
+    	//row 2, col 1
     	t[3].setValue("");
     	r[3].getContent().add(t[3]);
     	p[3].getContent().add(r[3]);
     	tc[3].getContent().add(p[3]);
     	tr[1].getContent().add(tc[3]);
-    	//------------------------------------------
     	
+    	//row 2, col 2
     	hpsmeasure[4].setVal(new java.math.BigInteger("30"));
         rpr[1].setSz(hpsmeasure[4]);
     	rpr[4].setB(bdt);
@@ -178,27 +182,110 @@ public class makereport {
     	p[4].getContent().add(r[4]);
     	tc[4].getContent().add(p[4]);
     	tr[1].getContent().add(tc[4]);
-    	//------------------------------------------
     	
+    	//row 2, col 3
     	t[5].setValue("");
     	r[5].getContent().add(t[5]);
     	p[5].getContent().add(r[5]);
     	tc[5].getContent().add(p[5]);
     	tr[1].getContent().add(tc[5]);
-    	//------------------------------------------
     	
-    	/*ctborder.setSz(new java.math.BigInteger("10"));
-    	tblborders.setTop(ctborder);
-    	tblborders.setBottom(ctborder);
-    	tblborders.setLeft(ctborder);
-    	tblborders.setRight(ctborder);
-    	tblpr.setTblBorders(tblborders);
-    	tbl.setTblPr(tblpr);*/
     	
         tbl.getContent().add(tr[0]);
         tbl.getContent().add(tr[1]);
+        wordMLPackage.getMainDocumentPart().addObject(tbl); 
+    }
+    
+    protected static void unsolved(){
+    	//row 1,col 1
+    	t[0].setValue("");
+    	r[0].getContent().add(t[0]);
+    	p[0].getContent().add(r[0]);
+    	tc[0].getContent().add(p[0]);
+    	tr[0].getContent().add(tc[0]);
+    	
+    	
+    	tbl.getContent().add(tr[0]);
+    	wordMLPackage.getMainDocumentPart().addObject(tbl);
+    }
+    
+    protected static void profile(){
+    	//row 1, col 1
+    	color[0].setVal("732303");
+        rpr[0].setColor(color[0]);
+        r[0].setRPr(rpr[0]);      
+    	shd[0].setFill(UnitsOfMeasurement.rgbTripleToHex(230, 230, 230));
+        tcpr[0].setShd(shd[0]);
+        tc[0].setTcPr(tcpr[0]);
         
-        wordMLPackage.getMainDocumentPart().addObject(tbl);
-        //wordMLPackage.getMainDocumentPart().addObject(org.docx4j.XmlUtils.unmarshalString(str));
+    	t[0].setValue("個人資料(PERSONAL INFORMATION)");
+    	r[0].getContent().add(t[0]);
+    	p[0].getContent().add(r[0]);
+    	tc[0].getContent().add(p[0]);
+    	tr[0].getContent().add(tc[0]);
+    	
+        //row 2, col 1
+    	t[1].setValue("姓名(Name)");
+    	r[1].getContent().add(t[1]);
+    	p[1].getContent().add(r[1]);
+    	tc[1].getContent().add(p[1]);
+    	tr[1].getContent().add(tc[1]);
+    	
+    	//row 2, col 2
+    	shd[2].setFill(UnitsOfMeasurement.rgbTripleToHex(230, 230, 230));
+        tcpr[2].setShd(shd[2]);
+        tc[2].setTcPr(tcpr[2]);
+        
+    	t[2].setValue("$chartname$");
+    	r[2].getContent().add(t[2]);
+    	p[2].getContent().add(r[2]);
+    	tc[2].getContent().add(p[2]);
+    	tr[1].getContent().add(tc[2]);
+
+    	
+    	tbl.getContent().add(tr[0]);
+    	tbl.getContent().add(tr[1]);
+    	wordMLPackage.getMainDocumentPart().addObject(tbl);
+    }
+    
+    protected static void content(){
+    	//row 1, col 1
+    	color[0].setVal("732303");
+        rpr[0].setColor(color[0]);
+        r[0].setRPr(rpr[0]);      
+    	shd[0].setFill(UnitsOfMeasurement.rgbTripleToHex(230, 230, 230));
+        tcpr[0].setShd(shd[0]);
+        tc[0].setTcPr(tcpr[0]);
+
+    	t[0].setValue("目錄(CONTENTS)");
+    	r[0].getContent().add(t[0]);
+    	p[0].getContent().add(r[0]);
+    	tc[0].getContent().add(p[0]);
+    	tr[0].getContent().add(tc[0]);
+        
+    	//row 2,col 1
+    	t[1].setValue("");
+    	r[1].getContent().add(t[1]);
+    	p[1].getContent().add(r[1]);
+    	tc[1].getContent().add(p[1]);
+    	tr[1].getContent().add(tc[1]);
+        
+    	tbl.getContent().add(tr[0]);
+    	tbl.getContent().add(tr[1]);
+    	wordMLPackage.getMainDocumentPart().addObject(tbl);
     }
 }  
+
+
+//set border line
+/*ctborder.setSz(new java.math.BigInteger("10"));
+tblborders.setTop(ctborder);
+tblborders.setBottom(ctborder);
+tblborders.setLeft(ctborder);
+tblborders.setRight(ctborder);
+tblpr.setTblBorders(tblborders);
+tbl.setTblPr(tblpr);*/
+
+
+//add by string
+//wordMLPackage.getMainDocumentPart().addObject(org.docx4j.XmlUtils.unmarshalString(str));
