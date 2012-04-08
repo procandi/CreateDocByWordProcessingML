@@ -9,10 +9,18 @@ public class makereport {
         wpml.initalize();
         
         //program core
+        wpml.sectPr_factory_create();
+        
+        wpml.ctsimplefield_factory_create();
+        
         wpml.header_factory_create();
         wpml.header();
         wpml.footer_factory_create();
         wpml.footer();
+        
+        wpml.set_sectPr();
+        
+        
         wpml.factory_create();
         wpml.title();
         wpml.factory_create();
@@ -22,9 +30,15 @@ public class makereport {
         wpml.factory_create();
         wpml.content();
         
+        
+        wpml.factory_create();
+        wpml.TOC_factory_create();
+        wpml.TOC();
+        
+        
         //save word file  
         wpml.wordMLPackage.save(new java.io.File(System.getProperty("user.dir") + "/aaa.docx") );  
     
-        System.out.println(".. done!");  
-    }        
+        System.out.println(".. done!");
+    }
 }  
